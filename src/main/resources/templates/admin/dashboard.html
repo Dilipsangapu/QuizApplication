@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            color: #333;
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .stat-box {
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .actions {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn-success {
+            background-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #1e7e34;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .questions-table {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        .question-text {
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+        .category-badge {
+            background: #e9ecef;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+        <div class="stats">
+            <div class="stat-box">
+                <strong th:text="${totalQuestions}"></strong><br>
+                Total Questions
+            </div>
+            <div class="stat-box">
+                <strong th:text="${#lists.size(categories)}"></strong><br>
+                Categories
+            </div>
+        </div>
+    </div>
+    
+    <div class="actions">
+        <h3>Quick Actions</h3>
+        <a th:href="@{/admin/add-question(adminId=${adminId})}" class="btn btn-success">Add New Question</a>
+        <a th:href="@{/admin/create-admin}" class="btn">Create Admin User</a>
+        <a th:href="@{/}" class="btn">Back to Home</a>
+    </div>
+    
+    <div th:if="${error != null}" class="error">
+        <p th:text="${error}"></p>
+    </div>
+    
+    <div class="questions-table">
+        <h3>All Questions</h3>
+        <table th:if="${questions != null and !questions.isEmpty()}">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Category</th>
+                    <th>Correct Answer</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="q : ${questions}">
+                    <td class="question-text" th:text="${q.question}"></td>
+                    <td><span class="category-badge" th:text="${q.category}"></span></td>
+                    <td th:text="${q.correctAnswer}"></td>
+                    <td>
+                        <a th:href="@{/admin/delete-question(adminId=${adminId}, questionId=${q.id})}" 
+                           class="btn btn-danger" 
+                           onclick="return confirm('Are you sure you want to delete this question?')">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p th:if="${questions == null or questions.isEmpty()}" style="text-align: center; color: #666;">
+            No questions found. <a th:href="@{/admin/add-question(adminId=${adminId})}">Add the first question</a>
+        </p>
+    </div>
+</body>
+</html>

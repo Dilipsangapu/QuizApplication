@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quiz Result</title>
+    <link rel="stylesheet" th:href="@{/css/result.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<h2>Quiz Results</h2>
+
+<div class="results-container">
+    <!-- Confetti for perfect scores -->
+    <div th:if="${score != null and totalQuestions != null and score == totalQuestions}" class="confetti" id="confetti"></div>
+
+    <div th:if="${error != null}" class="error-message">
+        <p th:text="${error}"></p>
+    </div>
+
+    <div th:if="${error == null}">
+        <div class="score-container">
+            <div class="score-main">
+                <strong>Your Score:</strong>
+                <span class="score-numbers" th:text="${score}"></span>
+                out of
+                <span class="score-numbers" th:text="${totalQuestions}"></span>
+            </div>
+
+            <div th:if="${totalQuestions != null}" class="percentage-container">
+                <div class="percentage-label">Percentage Score</div>
+                <div class="percentage-value" th:text="${#numbers.formatDecimal((score * 100.0) / totalQuestions, 1, 1)} + '%'"></div>
+
+                <!-- Circular progress indicator -->
+                <div class="progress-circle">
+                    <svg viewBox="0 0 100 100">
+                        <circle class="background" cx="50" cy="50" r="45"></circle>
+                        <circle class="progress" cx="50" cy="50" r="45"
+                                th:attr="stroke-dasharray=${#numbers.formatDecimal((score * 100.0) / totalQuestions * 2.827, 1, 2)} + ' 283'"
+                                th:style="'stroke: ' + (${score} == ${totalQuestions} ? '#28a745' :
+                                         (${score} >= ${totalQuestions} * 0.8 ? '#17a2b8' :
+                                         (${score} >= ${totalQuestions} * 0.6 ? '#ffc107' : '#dc3545')))"></circle>
+                    </svg>
+                    <div class="percentage-text" th:text="${#numbers.formatDecimal((score * 100.0) / totalQuestions, 1, 0)} + '%'"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance feedback messages -->
+        <div th:if="${score != null and totalQuestions != null}">
+            <div th:if="${score == totalQuestions}" class="feedback-message feedback-perfect">
+                Excellent! Perfect score!
+            </div>
+            <div th:if="${score >= totalQuestions * 0.8 and score < totalQuestions}" class="feedback-message feedback-great">
+                Great job! Well done!
+            </div>
+            <div th:if="${score >= totalQuestions * 0.6 and score < totalQuestions * 0.8}" class="feedback-message feedback-good">
+                Good effort! Keep practicing!
+            </div>
+            <div th:if="${score < totalQuestions * 0.6}" class="feedback-message feedback-study">
+                Keep studying and try again!
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <a th:href="@{/quiz/leaderboard}" class="nav-btn primary">View Leaderboard</a>
+        <a th:href="@{/quiz/categories(userId=${userId})}" class="nav-btn success">Take Another Quiz</a>
+        <a th:href="@{/}" class="nav-btn secondary">Back to Home</a>
+    </div>
+</div>
+
+<script>
+    // Add confetti animation for perfect scores
+    document.addEventListener('DOMContentLoaded', function() {
+        const confettiContainer = document.getElementById('confetti');
+        if (confettiContainer) {
+            for (let i = 0; i < 50; i++) {
+                createConfettiPiece(confettiContainer);
+            }
+        }
+
+        // Animate the circular progress
+        const progressCircle = document.querySelector('.progress');
+        if (progressCircle) {
+            // Start animation after a short delay
+            setTimeout(() => {
+                progressCircle.style.strokeDasharray = progressCircle.getAttribute('stroke-dasharray');
+            }, 500);
+        }
+    });
+
+    function createConfettiPiece(container) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + '%';
+        piece.style.animationDelay = Math.random() * 3 + 's';
+        piece.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        container.appendChild(piece);
+
+        // Remove the piece after animation
+        setTimeout(() => {
+            if (piece.parentNode) {
+                piece.parentNode.removeChild(piece);
+            }
+        }, 5000);
+    }
+</script>
+
+</body>
+</html>

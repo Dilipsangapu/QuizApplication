@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Leaderboard</title>
+    <link rel="stylesheet" th:href="@{/css/leaderboard.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<h2>Leaderboard</h2>
+
+<div class="leaderboard-container">
+    <div th:if="${results != null and !results.isEmpty()}">
+        <table class="leaderboard-table">
+            <thead>
+            <tr>
+                <th class="username">Username</th>
+                <th class="score">Score</th>
+                <th class="date">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="r : ${results}">
+                <td class="username" data-label="Username" th:text="${usernames[r.userId] != null ? usernames[r.userId] : r.userId}"></td>
+                <td class="score" data-label="Score" th:text="${r.score}"></td>
+                <td class="date" data-label="Date" th:text="${r.date}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${results == null or results.isEmpty()}" class="empty-leaderboard">
+        <h3>No Results Yet</h3>
+        <p>Be the first to complete a quiz and appear on the leaderboard!</p>
+    </div>
+
+    <div class="navigation">
+        <a th:href="@{/quiz/categories}" class="nav-btn">Take Quiz</a>
+        <a th:href="@{/}" class="nav-btn">Home</a>
+        <a th:href="@{/logout}" class="nav-btn">Logout</a>
+    </div>
+</div>
+</body>
+</html>

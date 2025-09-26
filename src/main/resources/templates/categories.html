@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Select Quiz Category</title>
+    <link rel="stylesheet" th:href="@{/css/categories.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<h1>Select a Quiz Category</h1>
+
+<div class="main-container">
+    <div th:if="${categories != null and !categories.isEmpty()}">
+        <p class="intro-text">Choose a category to start your quiz:</p>
+
+        <div class="categories-container">
+            <div th:each="category : ${categories}" class="category-card">
+                <h3 th:text="${category}"></h3>
+                <a th:href="@{'/quiz/' + ${category} + '?userId=' + ${userId}}"
+                   class="start-quiz-btn">
+                    Start Quiz
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${categories == null or categories.isEmpty()}" class="no-categories">
+        <p>No quiz categories available at the moment.</p>
+        <p>Please contact the administrator.</p>
+    </div>
+
+    <div class="navigation">
+        <a th:href="@{/quiz/leaderboard}">View Leaderboard</a>
+        <span class="separator">|</span>
+        <a th:href="@{/login}">Logout</a>
+    </div>
+</div>
+</body>
+</html>

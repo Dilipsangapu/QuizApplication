@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/register.css?v=3}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<h2>Register</h2>
+
+<div class="register-container">
+    <div th:if="${error != null}" class="error-message">
+        <p th:text="${error}"></p>
+    </div>
+
+    <form th:action="@{/register}" method="post" id="registerForm">
+        <label>
+            <input type="text" name="username" required placeholder="Enter your username" />
+        </label>
+
+        <label>
+            <div class="password-input">
+                <input type="password" name="password" required placeholder="Enter your password" id="passwordField" />
+                <button type="button" id="toggleRegisterPassword" class="toggle-password-btn" aria-label="Toggle password visibility" data-visible="false">
+                    <img th:src="@{/svg/eye-alt-svgrepo-com.svg}" class="eye-icon eye-open" alt="Show password">
+                    <img th:src="@{/svg/eye-slash-alt-svgrepo-com.svg}" class="eye-icon eye-closed hidden" alt="Hide password">
+                </button>
+            </div>
+            <div class="password-strength" id="passwordStrength">
+                <div class="password-strength-bar" id="passwordStrengthBar"></div>
+            </div>
+        </label>
+
+        <button type="submit" id="submitBtn">Create Account</button>
+    </form>
+
+    <div class="links-container">
+        <p>Already have an account? <a th:href="@{/login}">Login here</a></p>
+        <p><a th:href="@{/}">Back to Home</a></p>
+    </div>
+</div>
+
+<!-- Link to external JS -->
+<script th:src="@{/js/register.js?v=5}" defer></script>
+
+</body>
+</html>

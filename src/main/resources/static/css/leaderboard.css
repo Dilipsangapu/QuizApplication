@@ -1,0 +1,360 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+h2::after {
+    content: '🏆';
+    display: block;
+    font-size: 2rem;
+    margin-top: 10px;
+}
+
+/* Main container */
+.leaderboard-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+/* Table styling */
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Table header */
+.leaderboard-table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.leaderboard-table th {
+    padding: 20px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    position: relative;
+}
+
+.leaderboard-table th:first-child {
+    border-radius: 12px 0 0 0;
+}
+
+.leaderboard-table th:last-child {
+    border-radius: 0 12px 0 0;
+}
+
+/* Add icons to headers */
+.leaderboard-table th.username::before {
+    content: '👤 ';
+    margin-right: 5px;
+}
+
+.leaderboard-table th.score::before {
+    content: '🎯 ';
+    margin-right: 5px;
+}
+
+.leaderboard-table th.date::before {
+    content: '📅 ';
+    margin-right: 5px;
+}
+
+/* Table body */
+.leaderboard-table tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f0f4ff;
+    position: relative;
+}
+
+.leaderboard-table tbody tr:hover {
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+}
+
+.leaderboard-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+/* Rank styling for top 3 */
+.leaderboard-table tbody tr:nth-child(1) {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 50%, #fff3cd 100%);
+    border-left: 5px solid #ffc107;
+}
+
+.leaderboard-table tbody tr:nth-child(1):hover {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffe082 50%, #fff3cd 100%);
+}
+
+.leaderboard-table tbody tr:nth-child(2) {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #f8f9fa 100%);
+    border-left: 5px solid #6c757d;
+}
+
+.leaderboard-table tbody tr:nth-child(2):hover {
+    background: linear-gradient(135deg, #f8f9fa 0%, #dee2e6 50%, #f8f9fa 100%);
+}
+
+.leaderboard-table tbody tr:nth-child(3) {
+    background: linear-gradient(135deg, #fff8e1 0%, #ffe0b3 50%, #fff8e1 100%);
+    border-left: 5px solid #ff8f00;
+}
+
+.leaderboard-table tbody tr:nth-child(3):hover {
+    background: linear-gradient(135deg, #fff8e1 0%, #ffd699 50%, #fff8e1 100%);
+}
+
+/* Table cells */
+.leaderboard-table td {
+    padding: 16px;
+    text-align: left;
+    font-size: 15px;
+    color: #555;
+    position: relative;
+}
+
+/* Add rank numbers */
+.leaderboard-table tbody tr td:first-child::before {
+    content: counter(rank-counter) ". ";
+    counter-increment: rank-counter;
+    font-weight: 700;
+    color: #667eea;
+    margin-right: 8px;
+}
+
+.leaderboard-table tbody {
+    counter-reset: rank-counter;
+}
+
+/* Special styling for top 3 ranks */
+.leaderboard-table tbody tr:nth-child(1) td:first-child::before {
+    content: "🥇 ";
+    font-size: 1.2em;
+}
+
+.leaderboard-table tbody tr:nth-child(2) td:first-child::before {
+    content: "🥈 ";
+    font-size: 1.2em;
+}
+
+.leaderboard-table tbody tr:nth-child(3) td:first-child::before {
+    content: "🥉 ";
+    font-size: 1.2em;
+}
+
+/* Username styling */
+.leaderboard-table .username {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Score styling */
+.leaderboard-table .score {
+    font-weight: 700;
+    color: #28a745;
+    font-size: 16px;
+}
+
+/* Date styling */
+.leaderboard-table .date {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Empty state */
+.empty-leaderboard {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.empty-leaderboard h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #999;
+}
+
+.empty-leaderboard p {
+    font-size: 1.1rem;
+}
+
+/* Navigation */
+.navigation {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #f0f4ff;
+}
+
+.nav-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    .leaderboard-container {
+        padding: 25px;
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 25px;
+    }
+
+    .leaderboard-table {
+        font-size: 14px;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+        padding: 12px 8px;
+    }
+
+    .leaderboard-table th {
+        font-size: 13px;
+    }
+
+    /* Stack table content on very small screens */
+    @media (max-width: 480px) {
+        .leaderboard-table,
+        .leaderboard-table thead,
+        .leaderboard-table tbody,
+        .leaderboard-table th,
+        .leaderboard-table td,
+        .leaderboard-table tr {
+            display: block;
+        }
+
+        .leaderboard-table thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        .leaderboard-table tr {
+            background: white;
+            border: 1px solid #e1e8ff;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            padding: 15px;
+        }
+
+        .leaderboard-table td {
+            border: none;
+            padding: 8px 0;
+            text-align: right;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        .leaderboard-table td:before {
+            content: attr(data-label) ": ";
+            position: absolute;
+            left: 0;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            font-weight: 600;
+            color: #333;
+        }
+    }
+}
+
+/* Animations */
+.leaderboard-container {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.leaderboard-table tbody tr {
+    animation: slideIn 0.6s ease-out both;
+}
+
+.leaderboard-table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.leaderboard-table tbody tr:nth-child(2) { animation-delay: 0.2s; }
+.leaderboard-table tbody tr:nth-child(3) { animation-delay: 0.3s; }
+.leaderboard-table tbody tr:nth-child(4) { animation-delay: 0.4s; }
+.leaderboard-table tbody tr:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Focus styles for accessibility */
+.nav-btn:focus-visible {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quiz</title>
+    <link rel="stylesheet" th:href="@{/css/quiz.css}">
+    <script th:src="@{/js/quiz.js}"></script> <!-- Link to external JS -->
+</head>
+<body onload="startTimer()">
+
+<h2>Quiz - Category: <span th:text="${category}"></span></h2>
+<div id="timer" style="font-weight:bold; color:red;"></div>
+
+<form th:action="@{/quiz/submit}" th:id="quizForm" method="post">
+
+    <div th:each="q, iter : ${questions}">
+        <p><b th:text="${iter.index + 1} + '. ' + ${q.question}"></b></p>
+        <div th:each="opt, optIter : ${q.options}">
+            <label>
+                <input type="radio" th:name="'answers[' + ${iter.index} + ']'" th:value="${optIter.index}" />
+                <span th:switch="${optIter.index}">
+                    <span th:case="0">A. </span>
+                    <span th:case="1">B. </span>
+                    <span th:case="2">C. </span>
+                    <span th:case="3">D. </span>
+                    <span th:text="${opt}"></span>
+                </span>
+            </label><br/>
+        </div>
+        <br/>
+    </div>
+
+    <!-- Hidden fields for userId and category -->
+    <input type="hidden" name="userId" th:value="${userId}" />
+    <input type="hidden" name="category" th:value="${category}" />
+
+    <button type="submit" class="submit-btn">Submit Quiz</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Online Quiz System</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<h1>Welcome to the Online Quiz System</h1>
+
+<div class="main-container">
+    <div th:if="${userCount != null}" class="user-stats">
+        <p>Total registered users: <span th:text="${userCount}"></span></p>
+    </div>
+
+    <div th:if="${error != null}" class="error-message">
+        <p>Error: <span th:text="${error}"></span></p>
+    </div>
+
+    <!-- Show different navigation based on login status -->
+    <div th:if="${isLoggedIn}" class="nav-buttons">
+        <p class="welcome-message">Welcome back, <span th:text="${loggedInUser.username}"></span>!</p>
+        <a th:href="@{/quiz/categories}" class="nav-btn primary">Take Quiz</a>
+        <a th:href="@{/quiz/leaderboard}" class="nav-btn secondary">Leaderboard</a>
+        <a th:href="@{/logout}" class="nav-btn admin">Logout</a>
+    </div>
+    
+    <div th:if="${!isLoggedIn}" class="nav-buttons">
+        <a th:href="@{/login}" class="nav-btn primary">Login</a>
+        <a th:href="@{/register}" class="nav-btn secondary">Register</a>
+        <a th:href="@{/admin/login}" class="nav-btn admin">Admin Access</a>
+    </div>
+
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <ol>
+            <li>First, register a new account</li>
+            <li>Then login with your credentials</li>
+            <li>Select a quiz category</li>
+            <li>Answer the questions</li>
+            <li>View your results</li>
+        </ol>
+    </div>
+
+    <div class="admin-features">
+        <h3>Admin Features:</h3>
+        <ul>
+            <li><strong>Add Questions:</strong> Create new quiz questions with multiple choice options</li>
+            <li><strong>Manage Categories:</strong> Organize questions by categories (general, programming, math, etc.)</li>
+            <li><strong>Delete Questions:</strong> Remove outdated or incorrect questions</li>
+            <li><strong>View All Questions:</strong> See all questions in the system</li>
+        </ul>
+        <div class="admin-note">
+            <p><em>Note: Admin access requires special credentials. Contact system administrator for admin account creation.</em></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

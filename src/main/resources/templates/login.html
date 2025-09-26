@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/login.css?v=2}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script th:src="@{/js/login.js?v=2}" defer></script>
+    </head>
+<body>
+<h2>Login</h2>
+
+<div class="login-container">
+    <div th:if="${error != null}" class="error-message">
+        <p th:text="${error}"></p>
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <label>
+            Username:
+            <input type="text" name="username" required />
+        </label>
+        
+        <label>
+            Password:
+            <div class="password-input">
+                <input type="password" name="password" id="loginPassword" required />
+                <button type="button" id="toggleLoginPassword" class="toggle-password-btn" aria-label="Toggle password visibility" data-visible="false">
+                    <img th:src="@{/svg/eye-alt-svgrepo-com.svg}" class="eye-icon eye-open" alt="Show password">
+                    <img th:src="@{/svg/eye-slash-alt-svgrepo-com.svg}" class="eye-icon eye-closed hidden" alt="Hide password">
+                </button>
+            </div>
+        </label>
+        
+        <button type="submit">Login</button>
+    </form>
+
+    <p>New user? <a th:href="@{/register}">Register here</a></p>
+    <p><a th:href="@{/}">Back to Home</a></p>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const pwd = document.getElementById('loginPassword');
+        const toggle = document.getElementById('toggleLoginPassword');
+        if (pwd && toggle) {
+            toggle.addEventListener('click', function() {
+                pwd.type = pwd.type === 'password' ? 'text' : 'password';
+            });
+        }
+    });
+    </script>
+</body>
+</html>
